@@ -1,5 +1,4 @@
 import * as esbuild from "esbuild";
-import { sassPlugin, postcssModules } from "esbuild-sass-plugin";
 
 (async () => {
   await esbuild.build({
@@ -11,13 +10,6 @@ import { sassPlugin, postcssModules } from "esbuild-sass-plugin";
     format: "esm",
     sourcemap: true,
     minify: true,
-    plugins: [
-      sassPlugin({
-        type: "style",
-        transform: postcssModules({
-          // ...put here the options for postcss-modules: https://github.com/madyankin/postcss-modules
-        }),
-      }),
-    ],
+    plugins: [],
   });
 })();
