@@ -1,0 +1,38 @@
+name: CI
+on:
+  push:
+    branches:
+      - master
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "18.x"
+          cache: "npm"
+
+      - name: Install
+        run: env NODE_ENV=development npm install --prefer-offline --no-audit
+      - name: Test
+        run: npm run typecheck && npm run test
+
+      - name: Build
+        run: env NODE_ENV=production npm run build
+
+      - run: jq -s 'add'  package.json package-publish.json > package-final.json && rm -rf package.json && mv package-final.json package.json
+
+      - id: Publish
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          registry: "https://registry.npmjs.org/"
+          token: ${{ secrets.NPM_TOKEN }}
+          access: "public"
+          check-version: true
+      - if: steps.publish.outputs.type != 'none'
+        run: |
+          echo "Version changed: ${{ steps.publish.outputs.old-version }} => ${{ steps.publish.outputs.version }}"

@@ -1,0 +1,48 @@
+{
+  "name": "rocky7",
+  "version": "0.3.16",
+  "author": "Abhishiv Saxena<abhishiv@gmail.com>",
+  "license": "MIT",
+  "description": "Fine-grained reactive library with no compiler, no magic, and no virtual DOM",
+  "keywords": [
+    "reactive",
+    "dom",
+    "ui",
+    "frontend",
+    "framework"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abhishiv/rocky7"
+  },
+  "files": [
+    "./dist"
+  ],
+  "devDependencies": {
+    "esbuild": "^0.18.11",
+    "typescript": "^4.9.5",
+    "vite-tsconfig-paths": "^4.2.0",
+    "vitest": "^0.28.5"
+  },
+  "scripts": {
+    "build": "make build",
+    "test": "npx vitest --run",
+    "coverage": "npx vitest run --coverage --run",
+    "typecheck": "npx tsc --noEmit"
+  },
+  "sideEffects": false,
+  "main": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    },
+    "./state": {
+      "import": "./src/core/index.ts",
+      "require": "./src/core/index.ts"
+    }
+  },
+  "dependencies": {
+    "@gullerya/object-observer": "^6.1.1"
+  }
+}
