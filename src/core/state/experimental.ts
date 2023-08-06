@@ -11,6 +11,7 @@ import {
 import * as Constants from "../constants";
 import { getValueUsingPath } from "../../utils/index";
 
+export type { ObjPathProxy } from "../../utils/observer";
 export { getProxyMeta, getProxyPath } from "../../utils/observer";
 
 export type Signal<T = unknown> = {
@@ -83,7 +84,7 @@ export type WireFunction<T = unknown> = {
 };
 
 export type WireFactory<T = any> = (
-  arg: WireFunction<T> | Signal<T> //| StoreCursor
+  arg: WireFunction<T> | Signal<T>, //| StoreCursor
 ) => Wire<T>;
 
 // Symbol() doesn't gzip well. `[] as const` gzips best but isn't debuggable
@@ -126,7 +127,7 @@ export const wire: WireFactory = (arg) => {
 const runWire = (
   arg: WireFunction | Signal | StoreCursor,
   token: SubToken,
-  subWireFactory: WireFactory
+  subWireFactory: WireFactory,
 ) => {
   if (isProxy(arg)) {
     const cursor = arg as StoreCursor;
@@ -296,7 +297,7 @@ export const reify = <T = unknown>(cursor: T): extractGeneric<T> => {
 
 export const produce = <T = unknown>(
   cursor: T,
-  setter: (obj: extractGeneric<T>) => void
+  setter: (obj: extractGeneric<T>) => void,
 ): void => {
   const v = reify(cursor);
   setter(v);
