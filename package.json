@@ -1,6 +1,6 @@
 {
   "name": "rocky7",
-  "version": "0.3.16",
+  "version": "0.3.17",
   "author": "Abhishiv Saxena<abhishiv@gmail.com>",
   "license": "MIT",
   "description": "Fine-grained reactive library with no compiler, no magic, and no virtual DOM",
